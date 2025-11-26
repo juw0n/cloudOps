@@ -20,12 +20,22 @@ module "security" {
 module "database" {
   source = "./modules/database"
 
-  subnet_ids  =  module.networking.subnet_ids
-  project_tag    = var.project_tag
+  subnet_ids           = module.networking.subnet_ids
+  project_tag          = var.project_tag
   db_security_group_id = module.security.db_security_group_id
-  db_username = var.db_username
-  db_password = var.db_password
-  availability_zones = var.availability_zones
+  db_username          = var.db_username
+  db_password          = var.db_password
+  availability_zones   = var.availability_zones
+}
+
+module "compute" {
+  source = "./modules/compute"
+
+  subnet_ids                    = module.networking.subnet_ids
+  project_tag                   = var.project_tag
+  private_instance_sg_id        = module.security.private_app_sg_id
+  app_instance_type             = var.app_instance_type
+  ec2_iam_instance_profile_name = var.ec2_iam_instance_profile_name
 }
 
 # Create an S3 bucket for storing code
@@ -62,4 +72,10 @@ resource "aws_iam_role_policy_attachment" "ssm_attach" {
 resource "aws_iam_role_policy_attachment" "s3_attach" {
   role       = aws_iam_role.three_tier_app_ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
+# Create an IAM instance profile for EC2 instances
+resource "aws_iam_instance_profile" "three_tier_app_ec2_instance_profile" {
+  name = var.ec2_iam_instance_profile_name
+  role = aws_iam_role.three_tier_app_ec2_role.name
 }

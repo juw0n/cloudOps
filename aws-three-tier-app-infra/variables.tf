@@ -63,5 +63,19 @@ variable "db_username" {
 }
 variable "db_password" {
   description = "Master user password"
-  type = string
+  type        = string
+}
+
+# Compute module variables
+# Instance type for app-tier instances
+# Instance type
+variable "app_instance_type" {
+  description = "The instance type for the application tier instances"
+  type        = string
+}
+
+# EC2 IAM Instance Profile Name
+variable "ec2_iam_instance_profile_name" {
+  description = "The name of the IAM instance profile to attach to EC2 instances"
+  type        = string
 }

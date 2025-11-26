@@ -24,3 +24,7 @@ my_ip_cidr = "41.86.149.26/32"
 # db_security_group_id = "sg-0abc1234def567890"
 db_username = "admin"
 db_password = "YourSecurePassword123!"
+
+# Compute module variables
+app_instance_type             = "t2.micro"
+ec2_iam_instance_profile_name = "three-tier-app-ec2-instance-profile"
