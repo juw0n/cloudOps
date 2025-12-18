@@ -4,7 +4,7 @@ variable "project_tag" {
   type        = string
 }
 # App instance IDs variable
-variable "app_instance_ids" {
-  description = "IDs of the application server instances"
-  type        = list(string)
+variable "app_instance_id" {
+  description = "ID of the application server instance"
+  type        = string
 }
